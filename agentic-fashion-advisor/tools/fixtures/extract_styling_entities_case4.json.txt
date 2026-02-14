@@ -1,0 +1,17 @@
+{
+  "tool": "extract_styling_entities",
+  "input": {
+    "source_type": "wardrobe_text",
+    "raw_text": "I already have a black blazer and white sneakers. Need something for a casual date night."
+  },
+  "output": {
+    "occasion_type": "date",
+    "category_scope": "mix",
+    "wardrobe_items": [
+      { "item_type": "blazer", "color": "black" },
+      { "item_type": "sneakers", "color": "white" }
+    ],
+    "confidence": 0.89,
+    "extraction_notes": ["Extracted existing wardrobe items and date occasion."]
+  }
+}

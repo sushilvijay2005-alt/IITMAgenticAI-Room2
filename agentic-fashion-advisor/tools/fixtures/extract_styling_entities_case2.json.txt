@@ -1,0 +1,19 @@
+{
+  "tool": "extract_styling_entities",
+  "input": {
+    "source_type": "user_message",
+    "raw_text": "Office wear needed under 5000. I prefer minimal and neutral colors. No bright shades."
+  },
+  "output": {
+    "occasion_type": "office",
+    "category_scope": "clothing_only",
+    "budget": { "currency": "INR", "max": 5000 },
+    "style_preferences": ["minimal"],
+    "color_preferences": {
+      "preferred": ["neutral"],
+      "avoid": ["bright"]
+    },
+    "confidence": 0.91,
+    "extraction_notes": ["Detected office occasion, minimal style, budget cap, neutral palette with bright colors avoided."]
+  }
+}

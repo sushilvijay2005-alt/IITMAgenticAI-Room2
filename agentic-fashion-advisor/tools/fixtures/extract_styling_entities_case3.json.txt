@@ -1,0 +1,19 @@
+{
+  "tool": "extract_styling_entities",
+  "input": {
+    "source_type": "user_message",
+    "raw_text": "Looking for a modest festive outfit for a temple function. I want full sleeves and traditional wear. Budget around 10000."
+  },
+  "output": {
+    "occasion_type": "festive",
+    "category_scope": "full_outfit",
+    "budget": { "currency": "INR", "max": 10000 },
+    "style_preferences": ["ethnic"],
+    "cultural_constraints": {
+      "modesty_level": "high",
+      "traditional_required": true
+    },
+    "confidence": 0.93,
+    "extraction_notes": ["Identified festive temple context, high modesty, traditional requirement, budget."]
+  }
+}

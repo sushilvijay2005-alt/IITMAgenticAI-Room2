@@ -1,0 +1,151 @@
+{
+  "schema": "Schema/path",
+  "title": "extract_styling_entities",
+  "type": "object",
+  "properties": {
+    "tool": { "const": "extract_styling_entities" },
+
+    "input": {
+      "type": "object",
+      "properties": {
+        "source_type": {
+          "type": "string",
+          "enum": ["user_message", "wardrobe_text", "product_text", "image_caption"]
+        },
+        "raw_text": { "type": "string", "minLength": 1 }
+      },
+      "required": ["source_type", "raw_text"],
+      "additionalProperties": false
+    },
+
+    "output": {
+      "type": "object",
+      "properties": {
+        "occasion_type": {
+          "type": "string",
+          "enum": ["wedding", "office", "casual", "party", "festive", "date", "travel", "other"]
+        },
+
+        "category_scope": {
+          "type": "string",
+          "enum": ["full_outfit", "clothing_only", "accessories", "beauty", "mix"]
+        },
+
+        "budget": {
+          "type": "object",
+          "properties": {
+            "currency": { "type": "string" },
+            "min": { "type": "number", "minimum": 0 },
+            "max": { "type": "number", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+
+        "style_preferences": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "minimal",
+              "classic",
+              "streetwear",
+              "ethnic",
+              "formal",
+              "fusion",
+              "bohemian",
+              "sporty",
+              "trendy",
+              "vintage"
+            ]
+          }
+        },
+
+        "color_preferences": {
+          "type": "object",
+          "properties": {
+            "preferred": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "avoid": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "cultural_constraints": {
+          "type": "object",
+          "properties": {
+            "modesty_level": {
+              "type": "string",
+              "enum": ["high", "medium", "low"]
+            },
+            "traditional_required": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        },
+
+        "climate_context": {
+          "type": "object",
+          "properties": {
+            "season": {
+              "type": "string",
+              "enum": ["summer", "winter", "monsoon", "spring", "autumn", "all_season"]
+            },
+            "indoor_outdoor": {
+              "type": "string",
+              "enum": ["indoor", "outdoor", "mixed"]
+            }
+          },
+          "additionalProperties": false
+        },
+
+        "body_fit_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["petite", "plus", "tall", "broad_shoulders", "narrow_shoulders", "maternity", "other"]
+          }
+        },
+
+        "wardrobe_items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "item_type": { "type": "string" },
+              "color": { "type": "string" },
+              "pattern": { "type": "string" }
+            },
+            "required": ["item_type"],
+            "additionalProperties": false
+          }
+        },
+
+        "brand_tier_preference": {
+          "type": "string",
+          "enum": ["luxury", "mid_range", "budget", "mixed"]
+        },
+
+        "confidence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+
+        "extraction_notes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+
+      "required": ["confidence", "extraction_notes"],
+      "additionalProperties": false
+    }
+  },
+
+  "required": ["tool", "input", "output"],
+  "additionalProperties": false
+}

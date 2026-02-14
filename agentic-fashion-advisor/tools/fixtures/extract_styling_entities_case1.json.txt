@@ -1,0 +1,17 @@
+{
+  "tool": "extract_styling_entities",
+  "input": {
+    "source_type": "user_message",
+    "raw_text": "I need an outfit for a friend's wedding. Budget is 8000 INR. I like ethnic styles and prefer maroon or gold. It will be an indoor evening event."
+  },
+  "output": {
+    "occasion_type": "wedding",
+    "category_scope": "full_outfit",
+    "budget": { "currency": "INR", "max": 8000 },
+    "style_preferences": ["ethnic"],
+    "color_preferences": { "preferred": ["maroon", "gold"] },
+    "climate_context": { "indoor_outdoor": "indoor" },
+    "confidence": 0.94,
+    "extraction_notes": ["Extracted wedding occasion, budget, ethnic style, color preference, indoor context."]
+  }
+}

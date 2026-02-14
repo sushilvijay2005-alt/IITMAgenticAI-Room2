@@ -1,0 +1,19 @@
+{
+  "tool": "extract_styling_entities",
+  "input": {
+    "source_type": "user_message",
+    "raw_text": "Party outfit for an outdoor summer event. I like trendy looks and mid-range brands."
+  },
+  "output": {
+    "occasion_type": "party",
+    "category_scope": "full_outfit",
+    "style_preferences": ["trendy"],
+    "brand_tier_preference": "mid_range",
+    "climate_context": {
+      "season": "summer",
+      "indoor_outdoor": "outdoor"
+    },
+    "confidence": 0.88,
+    "extraction_notes": ["Detected party occasion, summer outdoor climate, trendy style, mid-range brand preference."]
+  }
+}
