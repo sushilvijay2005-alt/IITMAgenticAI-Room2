@@ -1,0 +1,138 @@
+Agent States: Personal Stylist Outfit Curator
+
+##Objective
+
+Design a single-agent workflow that curates coordinated, occasion-specific outfits by:
+
+- capturing user style profile and constraints
+- gathering contextual signals (occasion, weather, culture, budget)
+- discovering and aggregating products across platforms
+- composing coherent outfits with fit/modesty considerations
+- learning from feedback
+- requiring Human-in-the-Loop approval before any purchase action
+
+##State Machine (High Level)
+1. intake
+
+- Parse the user’s initial request (occasion, gender expression, category, urgency).
+- Create a session profile skeleton:
+	- occasion_type
+	- budget_range
+	- cultural/modesty preferences
+	- body fit notes (only if user-provided)
+	- climate/location (for weather adaptation)
+- Detect missing constraints.
+- Classify request type:
+	- full outfit | accessory add-on | beauty look | wardrobe gap fill.
+
+2. profile_enrichment
+
+- Ask targeted questions for:
+	- style archetype (minimal, ethnic, streetwear, formal, fusion, etc.)
+	- color preferences / avoid list
+	- brand comfort tier (luxury, mid, budget)
+	- fit issues (e.g., petite, plus, tall) — only if user shares
+- Load stored preferences if returning user.
+- Build a normalized style vector.
+
+3. context_resolution
+
+- Derive contextual constraints:
+	- weather/season suitability
+	- time of day (day/night event)
+	- cultural appropriateness (e.g., festive, wedding, modest wear)
+	- dress code strictness
+- Compute budget allocation strategy:
+	- hero item vs balanced spend
+	- reuse-from-wardrobe opportunities (if user provides wardrobe).
+
+4. product_discovery
+
+- Query product sources.
+- Filter by:
+	- budget
+	- size/fit availability
+	- cultural suitability
+	- climate fabric suitability
+	- color harmony with requested palette
+- Normalize products into a candidate item pool with attributes:
+	- category, price, fabric, fit type, brand tier, availability link.
+
+5. outfit_composition
+
+- Assemble coordinated outfits using rules:
+	- Fit
+	- color harmony (max palette constraint)
+	- occasion formality score
+	- cultural/modesty compliance
+- Generate multiple outfit options:
+	- safe/classic
+	- trendy/statement
+	- budget-optimized
+	- Add accessories + beauty suggestions where relevant.
+
+6. ranking
+
+- Score each outfit on:
+	- style alignment
+	- budget compliance
+	- climate suitability
+	- occasion appropriateness
+	- versatility/reusability
+- Rank outfits and select top-N.
+
+7. recommendation
+
+- Produce structured output per outfit:
+	- item list + price breakdown
+	- total cost vs budget
+	- why it works (styling rationale)
+	- alternatives for each key item
+	- reuse suggestions
+- Provide styling tips (drape, layering, grooming, footwear pairing).
+
+8. human_feedback_loop (HITL)
+
+- Ask user to:
+	- like/dislike items
+	- adjust budget
+	- request more modest/more bold options
+	- swap specific categories
+- Capture feedback signals and update style vector.
+
+9. purchase_gate (HITL required)
+
+- Before generating any cart plan:
+	- confirm budget lock
+	- confirm occasion
+	- confirm selected outfit
+- Provide buy plan only (no auto-purchase).
+
+10. finalize
+
+- Output:
+	- final outfit board
+	- shopping links (grouped by platform)
+	- total spend summary
+	- fallback substitutions (out-of-stock handling)
+	- session learning log (preferences updated).
+
+## Stop Conditions (Must Ask Human)
+
+- Budget not specified or conflicting
+- Cultural/modesty requirement unclear
+- Body fit
+- Occasion ambiguity
+- Any purchase or external cart action
+- Low confidence in size/fit availability
+- Climate/location unknown for seasonal outfits
+
+## Output Guarantee – Final answer must include:
+
+- Selected outfit(s) with itemized list
+- Total cost vs budget
+- Style rationale (why it fits the user + occasion)
+- Cultural/modesty compliance note
+- Climate suitability note
+- Alternatives
+- Next steps (feedback prompt or purchase confirmation question)

@@ -1,0 +1,91 @@
+Input (User -> Agent)
+User message describing outfit need + optional context (occasion details, budget, links, wardrobe items, cultural notes, climate/location).
+
+Minimal required fields (by end of intake):
+- occasion_type (wedding | office | casual | party | festive | date | travel | other)
+- budget_range (numeric range or max budget)
+- category_scope (full_outfit | clothing_only | accessories | beauty | mix)
+- At least one preference signal:
+  - style_preference OR
+  - color_preference OR
+  - cultural/modesty note OR
+  - existing wardrobe item to match
+
+If any of the above is missing -> agent must request_more_info and stop.
+Internal Session Object (Canonical)
+The agent maintains a canonical StylingSession object with fields:
+
+- Styling-Session (string)
+- occasion_type
+- budget_total
+- budget_allocation (per category)
+- category_scope
+- color (preferred + avoid)
+- cultural_constraints (modesty_level, traditional_requirements)
+- climate_context (season, temperature_band, indoor/outdoor)
+- body_fit_notes (only if user-provided)
+- product_candidates (array of normalized items)
+- outfit_options (array of composed outfits)
+- scores (per outfit: style_fit, budget_fit, occasion_fit, climate_fit, versatility)
+- selected_outfit (optional, post-HITL)
+- alternatives_map (item → substitutes)
+- feedback_log (likes/dislikes, adjustments)
+- audit_log (tool calls + timestamps)
+Output (Agent -> User)
+All user-facing responses must include a structured block.
+
+Required Output Format:
+
+1) Decision: one of
+- request_more_info
+- present_outfit_options
+- refine_based_on_feedback
+- propose_purchase_plan (HITL required)
+- finalize_session
+
+2) Outfit Options / Plan (for each outfit):
+- itemized list (category, item_name, price, platform)
+- total_cost vs budget_total
+- budget_status (within | near_limit | exceeds)
+- styling_rationale (why it fits style + occasion)
+
+3) Constraint Compliance:
+- cultural_modesty: compliant | needs_confirmation
+- climate_suitability: appropriate | warning
+- fit_confidence: high | medium | low
+
+4) Alternatives:
+- substitutions for key items (lower cost / different modesty / different color)
+- reuse_from_wardrobe suggestions (if wardrobe provided)
+
+5) Evidence Used:
+- user_inputs_consumed (occasion, budget, style, colors, wardrobe_items)
+- external_signals (weather, season) if applied
+- product_sources_queried (catalog names, no external sharing)
+
+
+HITL Language
+Before generating any buy-plan or grouped shopping links, the agent must ask:
+
+
+Agent must not proceed to purchase planning without explicit confirmation.
+Safety & Boundary Flags
+- budget_missing_flag
+- cultural_uncertainty_flag
+- occasion_ambiguity_flag
+- fit_risk_flag (low size confidence)
+- purchase_requires_hitl (always true for buy phase)
+
+If any critical flag is true → Decision must be request_more_info.
+Scope Limitation
+Allowed outputs:
+- curated outfit options
+- styling advice
+- budget breakdown
+- shopping plan
+
+Not allowed:
+- auto-purchase
+- body shape inference without user input
+- external profile sharing
+- medical/dermatology beauty claims

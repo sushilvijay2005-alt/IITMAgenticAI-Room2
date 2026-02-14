@@ -1,0 +1,23 @@
+[*] --> intake
+
+    intake --> profile_enrichment
+    profile_enrichment --> context_resolution
+    context_resolution --> missing_info_check
+
+    missing_info_check --> product_discovery: all required fields present
+    missing_info_check --> missing_info_check: ask targeted questions (budget/occasion/style missing)
+
+    product_discovery --> outfit_composition
+    outfit_composition --> Ranking
+    Ranking --> recommendation
+
+    recommendation --> human_feedback_loop: feedback provided
+    human_feedback_loop --> outfit_composition: refine selections
+
+    recommendation --> purchase_gate: user selects outfit
+    purchase_gate --> purchase_gate: ask HITL approval (budget/fit confirmation)
+
+    purchase_gate --> finalize: approved
+    purchase_gate --> recommendation: rejected/changes requested
+
+    finalize --> [*]
