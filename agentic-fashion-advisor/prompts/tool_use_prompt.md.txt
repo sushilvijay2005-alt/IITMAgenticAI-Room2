@@ -1,0 +1,55 @@
+Rule Order for Tool Calls:
+
+A) Missing critical fields → NO TOOL CALL
+If any are missing:
+- occasion_type
+- budget_range
+- category_scope OR at least one preference signal
+→ Ask clarification questions and stop.
+
+B) Raw user text present → ENTITY EXTRACTION
+Call extract_styling_entities(source_type="user_message", raw_text)
+Normalize into session fields and merge without overwriting confirmed data.
+
+C) Wardrobe text provided
+Call extract_styling_entities(source_type="wardrobe_text", raw_text)
+Map to wardrobe_items.
+
+D) Before product discovery
+Proceed only if:
+- budget_total known
+- occasion_type known
+- at least one style or cultural signal exists
+Else → request_more_info.
+
+E) Product discovery phase
+Call product search tools with filters:
+- budget allocation
+- category_scope
+- modesty requirements
+- climate suitability
+- color palette
+
+F) Outfit composition & scoring
+Call scoring engine to compute:
+- style_fit
+- budget_fit
+- occasion_fit
+- climate_fit
+- versatility
+Rank and select top-N.
+
+G) Feedback loop
+Update style_vector and re-run scoring. Do not re-extract unless new constraints appear.
+
+H) Purchase gate (HITL)
+Confirm selected_outfit, budget_total, occasion.
+Set purchase_requires_hitl = true.
+Ask approval question.
+Do NOT generate shopping links without approval.
+
+Tool calling discipline:
+- Max 2 tools per step.
+- If confidence < 0.7 on critical fields -> ask clarification.
+- Do not re-call tools on unchanged text.
+- Prefer session state over repeated tool calls.

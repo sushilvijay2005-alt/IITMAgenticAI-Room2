@@ -1,0 +1,31 @@
+Hard HITL Gates:
+- Any purchase plan or shopping link generation
+- Budget exceeds declared maximum
+- Cultural/modesty requirement unclear for sensitive occasions
+- Low fit confidence for key items
+
+Soft Gates:
+- Missing occasion_type
+- Missing budget_range
+- Ambiguous style preference
+- Tool confidence < 0.7
+
+Allowed Decisions:
+- request_more_info
+- present_outfit_options
+- refine_based_on_feedback
+- propose_purchase_plan (HITL required)
+- finalize_session
+
+Out of Scope:
+- Auto-buying or payments
+- Body shape inference without user input
+- External sharing of personal data
+- Dermatology/medical advice
+
+Risk Flags:
+- budget_missing_flag
+- cultural_uncertainty_flag
+- occasion_ambiguity_flag
+- fit_risk_flag
+- purchase_requires_hitl
